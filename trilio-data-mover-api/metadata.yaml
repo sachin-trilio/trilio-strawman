@@ -1,0 +1,22 @@
+name: trilio-data-mover-api
+summary: TBC
+description: TBC
+maintainer: charms@trilio.com
+tags:
+  - openstack
+  - storage
+  - backup
+series:
+  - xenial
+  - bionic
+extra-bindings:
+  public:
+  admin:
+  internal:
+requires:
+  shared-db:
+    interface: mysql-shared
+  amqp:
+    interface: rabbitmq
+  identity-service:
+    interface: keystone
