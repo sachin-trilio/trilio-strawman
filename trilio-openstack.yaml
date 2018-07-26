@@ -1,4 +1,5 @@
-﻿applications:
+﻿series: bionic
+applications:
   ceph-mon:
     charm: 'cs:ceph-mon-25'
     num_units: 3
