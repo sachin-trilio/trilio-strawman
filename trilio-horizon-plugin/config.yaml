@@ -1,0 +1,18 @@
+options:
+  TVAULT_V:
+    type: string
+    default: "3.0.73.tar.gz"
+    description: "TVault version"
+  TVAULTAPP:
+    type: string
+    default: "192.168.25.20"
+    description: "TVault IP Address"
+  HORIZON_PATH:
+    type: string
+    default: "/usr/share/openstack-dashboard/"
+    description: "Path of openstack dashbaord"
+  WebServer:
+    type: string
+    default: "apache2"
+    description: "Webservice name"
+
