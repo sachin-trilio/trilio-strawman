@@ -1,22 +1,23 @@
 #!/bin/bash
 set -e
-TVAULT_V=3.0.73.tar.gz
-TVAULTAPP=192.168.25.20
-HORIZON_PATH=/usr/share/openstack-dashboard/
-WebServer=apache2
-juju-log "pip install --no-deps http://$TVAULTAPP:8081/packages/python-workloadmgrclient-$TVAULT_V &> /dev/null"
-#pip install --no-deps http://$TVAULTAPP:8081/packages/python-workloadmgrclient-$TVAULT_V &> /dev/null
-hostname
-pip install --no-deps http://$TVAULTAPP:8081/packages/python-workloadmgrclient-$TVAULT_V 
+TVAULT_V=$1
+TVAULTAPP=$2
+HORIZON_PATH=$3
+WebServer=$4
+
+juju-log "GOT the value from config $TVAULT_V"
+juju-log "GOT the value from config $TVAULTAPP"
+juju-log "GOT the value from config $HORIZON_PATH"
+juju-log "GOT the value from config $WebServer"
+
+pip install --no-deps http://$TVAULTAPP:8081/packages/python-workloadmgrclient-$TVAULT_V &> /dev/null
         if [ $? -eq 0 ]; then
                 juju-log "Installing python-workloadmgrclient-$TVAULT_V"
         else
                 juju-log "Error : pip install http://$TVAULTAPP:8081/packages/python-workloadmgrclient-$TVAULT_V"
                 exit 1
         fi
-        juju-log "pip install --no-deps http://$TVAULTAPP:8081/packages/tvault-horizon-plugin-$TVAULT_V &> /dev/null"
-        #pip install --no-deps http://$TVAULTAPP:8081/packages/tvault-horizon-plugin-$TVAULT_V &> /dev/null
-        pip install --no-deps http://$TVAULTAPP:8081/packages/tvault-horizon-plugin-$TVAULT_V 
+        pip install --no-deps http://$TVAULTAPP:8081/packages/tvault-horizon-plugin-$TVAULT_V &> /dev/null
         if [ $? -eq 0 ]; then
                 juju-log "Installing tvault-horizon-plugin-$TVAULT_V"
         else

@@ -6,23 +6,26 @@ from charmhelpers.core.hookenv import status_set, config
 
 @when_not('sreact.installed')
 def install_sreact():
-    # Do your setup here.
-    #
-    # If your charm has other dependencies before it can install,
-    # add those as @when() clauses above., or as additional @when()
-    # decorated handlers below
-    #
-    # See the following for information about reactive charms:
-    #
-    #  * https://jujucharms.com/docs/devel/developer-getting-started
-    #  * https://github.com/juju-solutions/layer-basic#overview
-    #
+
+    #Push /usr/bin onto the start of $PATH from the hander for the specific subprocess call for the install script.
+    #This will make pip to be called from host install rather than virtualenv.
+    s_env = os.environ.copy()
+    s_env['PATH'] = '/usr/bin:{}'.format(s_env['PATH'])
     
     #Read config parameters TVault version, TVault IP, Horizon Path and Webserver
     tv_version = config('TVAULT_V')
     tv_ip = config('TVAULTAPP')
     horizon_path = config('HORIZON_PATH')
     webserver = config('WebServer')
-    #subprocess.check_call(['files/trilio/install', tv_version, tv_ip, horizon_path, webserver])
-    subprocess.check_call(['files/trilio/install', tv_version, tv_ip, horizon_path, webserver], shell=True)
+
+    #Call install script to install the packages
+    subprocess.check_call(['files/trilio/install', tv_version, tv_ip, horizon_path, webserver], env=s_env)
     set_flag('sreact.installed')
+
+@hook('{requires:name}-relation-{joined,changed}')
+def changed_sreact(self):
+    self.set_state('{relation_name}.available')
+
+@hook('{requires:name}-relation-{broken,departed}')
+def broken_sreact(self):
+    self.remove_state('{relation_name}.available')
