@@ -25,4 +25,3 @@ pip install --no-deps http://$TVAULTAPP:8081/packages/python-workloadmgrclient-$
                 exit 1
         fi
 juju-log "Workloadmanager client and tvault-horizon-plugin are installed....configure is next step"
-status-set active
